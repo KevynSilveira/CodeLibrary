@@ -8,9 +8,15 @@ def Cria_frame_principal():
     FPrincipal.resizable(False, False)
 
     #Definir tema no frame, principal
+    tema_atual = "light"
     def frame_tema():
-         customtkinter.set_appearance_mode("light")
-
+        nonlocal tema_atual
+        if tema_atual == "light":
+            customtkinter.set_appearance_mode("dark")
+            tema_atual = "dark"
+        else:
+            customtkinter.set_appearance_mode("light")
+            tema_atual = "light"
 
     #Frame principal
     FLinguagens = customtkinter.CTkFrame(master=FPrincipal, width=200, height=570, corner_radius=10)
