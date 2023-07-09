@@ -66,27 +66,27 @@ def cadastro_comando():
     FConteudo.place(x=10, y=60)
 
     label_CLinguagem = customtkinter.CTkLabel(master=FConteudo, text="Insira a linguagem:")
-    label_CLinguagem.place(x=20, y=10)
+    label_CLinguagem.place(x=10, y=10)
 
     # Campo linguagem
     CLinguagem = customtkinter.CTkEntry(master=FConteudo, width=560, height=30, corner_radius=10)
-    CLinguagem.place(x=20, y=40)
+    CLinguagem.place(x=10, y=40)
     text = CLinguagem.get()
 
     label_CComando = customtkinter.CTkLabel(master=FConteudo, text="Insira o comando:")
-    label_CComando.place(x=20, y=80)
+    label_CComando.place(x=10, y=80)
 
     # Campo comando
     CComando = customtkinter.CTkEntry(master=FConteudo, width=560, height=30, corner_radius=10)
-    CComando.place(x=20, y=110)
+    CComando.place(x=10, y=110)
     text = CComando.get()
 
     label_CDescricao = customtkinter.CTkLabel(master=FConteudo, text="Insira a descrição:")
-    label_CDescricao.place(x=20, y=140)
+    label_CDescricao.place(x=10, y=140)
 
     # Campo descricao
     CDescricao = customtkinter.CTkEntry(master=FConteudo, width=560, height=30, corner_radius=10)
-    CDescricao.place(x=20, y=170)
+    CDescricao.place(x=10, y=170)
     text = CDescricao.get()
 
     FCadcomando.mainloop()
