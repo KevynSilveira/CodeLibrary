@@ -29,11 +29,11 @@ def criar_frame_principal():
     BTema.place(x=950, y=11)
 
     # Frame conteudo
-    FConteudo = customtkinter.CTkFrame(master=FPrincipal, width=770, height=480, corner_radius=10)
-    FConteudo.place(x=220, y=100)
+    FCadcomando = customtkinter.CTkFrame(master=FPrincipal, width=770, height=480, corner_radius=10)
+    FCadcomando.place(x=220, y=100)
 
     # Scroll bar do frame conteudo
-    scrollbar = customtkinter.CTkScrollbar(FConteudo)
+    scrollbar = customtkinter.CTkScrollbar(FCadcomando)
     scrollbar.place(x=750, y=10)
 
     # Botao exportar

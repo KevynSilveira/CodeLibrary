@@ -3,7 +3,7 @@ import customtkinter
 #Armazena o tema atual do frame
 tema_atual = "dark"
 
-def tema():
+def tema():#Muda o tema do frame para a cor oposta
     global tema_atual
     if tema_atual == "light":
         customtkinter.set_appearance_mode("dark")
