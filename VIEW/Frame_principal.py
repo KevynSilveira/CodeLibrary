@@ -29,7 +29,7 @@ def criar_frame_principal():
     BTema.place(x=950, y=11)
 
     # Frame conteudo
-    FCadcomando = customtkinter.CTkFrame(master=FPrincipal, width=770, height=480, corner_radius=10)
+    FCadcomando = customtkinter.CTkFrame(master=FPrincipal, width=770, height=420, corner_radius=10)
     FCadcomando.place(x=220, y=100)
 
     # Scroll bar do frame conteudo
@@ -39,6 +39,10 @@ def criar_frame_principal():
     # Botao exportar
     BExportar = customtkinter.CTkButton(master=FPrincipal, text="Exportar")
     BExportar.place(x=840, y=540)
+
+    # Botao Cadastrar comando
+    BCadastrar = customtkinter.CTkButton(master=FPrincipal, text="Cadastrar")
+    BCadastrar.place(x=670, y=540)
 
     # Executa o Frame principal
     FPrincipal.mainloop()
