@@ -1,6 +1,5 @@
 import customtkinter
 from Funcoes_frame import tema
-import Messagebox
 
 def criar_frame_principal():
     # Cria a janela principal do código.
