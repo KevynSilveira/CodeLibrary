@@ -11,9 +11,6 @@ def criar_frame_principal():
     #funcoes
     def cadastro_comando():
 
-        #FCadcomando = customtkinter.CTkFrame(master=FPrincipal, width=500, height=330, corner_radius=10)
-        #FCadcomando.place(x=250, y=130)
-
         # Frame conteudo, onde ficara todas as opcoes de cadastar um comando
         FRequisitocad = customtkinter.CTkFrame(master=FConteudo, width=480, height=330, corner_radius=10)
         FRequisitocad.place(x=145, y=45)
