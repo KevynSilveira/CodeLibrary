@@ -196,7 +196,7 @@ def criar_frame_principal():
 
     descricaoGit = "Adiciona arquivos no stage"
     descricaoSql = "Seleciona arquivos"
-    descricaoPython = "Importa bibliotecasjuyEJtrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+    descricaoPython = "Importa bibliotecas"
 
     criar_frame_conteudo(git, comandoGit, descricaoGit)
     criar_frame_conteudo(sql, comandoSQL, descricaoSql)
