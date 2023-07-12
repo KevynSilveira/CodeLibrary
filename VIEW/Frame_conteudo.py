@@ -7,6 +7,14 @@ descricao = "Seleciona o campo indicado"
 
 # Função para criar o frame de conteúdo
 def criar_frame_conteudo(linguagem, comando, descricao):
+
+    def mostrar_descricao():
+        MDescricao = customtkinter.CTkTextbox(master=FPrincipal, width=500, height=100)
+        MDescricao.insert(customtkinter.END, descricao)
+        MDescricao.place(x=250, y=10)
+
+
+
     # Cria a janela principal do código.
     FPrincipal = customtkinter.CTk()
     FPrincipal.geometry("1000x590")  # Define as dimensões da janela
@@ -34,8 +42,9 @@ def criar_frame_conteudo(linguagem, comando, descricao):
     FDescricao.place(x=150, y=0)
     LDescricao = customtkinter.CTkLabel(master=FDescricao, text=descricao)
     LDescricao.place(relx=0.5, rely=0.5, anchor="center")
-    BDescricao = customtkinter.CTkButton(master=FDescricao, width=10, height=10, text="", corner_radius=2)
+    BDescricao = customtkinter.CTkButton(master=FDescricao, width=10, height=10, text="", corner_radius=2, command=mostrar_descricao)
     BDescricao.place(x=340, y=35)
+
 
     # Inicia o loop principal da janela
     FPrincipal.mainloop()
