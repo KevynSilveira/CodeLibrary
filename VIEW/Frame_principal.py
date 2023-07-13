@@ -1,6 +1,6 @@
 import customtkinter
-from Funcoes_frame import tema
 import textwrap
+from Funcoes_frame import tema
 
 def criar_frame_principal():
     # Cria a janela principal do código.
@@ -9,12 +9,12 @@ def criar_frame_principal():
     FPrincipal.title("Biblioteca de comandos")
     FPrincipal.resizable(False, False)
 
-    # Funcoes
+    # Inicializa a posição vertical
+    global y_pos  # Indica que estamos utilizando a variável global y_pos
+    y_pos = 10
 
+    # Função para cadastrar um novo comando
     def cadastro_comando():
-        # Essa função tem como objetivo criar uma interface para o usuário cadastrar um comando,
-        # escolhendo a linguagem, cadastrando comando e descrição.
-
         def cancela_cadastro():
             # Remove a tela de cadastro
             FCadcomando.destroy()
@@ -72,7 +72,10 @@ def criar_frame_principal():
                                               command=cadastrar)
         BCadcomando.place(x=260, y=290)
 
+    # Função para criar os frames de conteúdo
     def criar_frame_conteudo(linguagem, comando, descricao):
+        global y_pos  # Indica que estamos utilizando a variável global y_pos
+
         # Definição das variáveis
         linguagem = linguagem
         comando = comando
@@ -81,7 +84,7 @@ def criar_frame_principal():
         # Tamanho máximo de caracteres para a descrição
         max_caracteres = 30
 
-        def mostrar_descricao():
+        def mostrar_descricao(y):
             def voltar_descricao():
                 MDescricao.destroy()
                 BVoltar.destroy()
@@ -89,13 +92,13 @@ def criar_frame_principal():
             MDescricao = customtkinter.CTkTextbox(master=FConteudo, width=740, height=100)
             MDescricao.insert(customtkinter.END, descricao)
             MDescricao.bind("<Key>", lambda e: "break")  # Desativa a entrada do teclado
-            MDescricao.place(x=10, y=10)
+            MDescricao.place(x=10, y=y)
 
             BVoltar = customtkinter.CTkButton(master=FConteudo, width=10, height=10, text="", corner_radius=2,
                                               command=voltar_descricao)
-            BVoltar.place(x=740, y=10)
+            BVoltar.place(x=740, y=y)
 
-        y_pos = 10  # Posição vertical inicial
+        global y_pos  # Indica que estamos utilizando a variável global y_pos
 
         for _ in range(1):
             # Cria o frame para o conteúdo
@@ -118,7 +121,7 @@ def criar_frame_principal():
             FDescricao = customtkinter.CTkFrame(master=FBlocoConteudo, width=440, height=45)
             FDescricao.place(x=300, y=0)
             BDescricao = customtkinter.CTkButton(master=FDescricao, width=10, height=10, text="", corner_radius=2,
-                                                 command=mostrar_descricao)
+                                                 command=lambda y_pos=y_pos: mostrar_descricao(y_pos))
             BDescricao.place(x=430, y=35)
 
             # Verifica se o texto excede o limite e adiciona os três pontos se necessário
@@ -130,8 +133,6 @@ def criar_frame_principal():
             LDescricao.place(relx=0.5, rely=0.5, anchor="center")
 
             y_pos += 55  # Atualiza a posição vertical para o próximo frame
-
-        # Inicia o loop principal da janela
 
     # Frame principal
     FLinguagens = customtkinter.CTkFrame(master=FPrincipal, width=200, height=570, corner_radius=10)
@@ -175,7 +176,7 @@ def criar_frame_principal():
     FConteudo.place(x=220, y=100)
 
     # Scroll bar do frame conteúdo
-    scrollbar = customtkinter.CTkScrollbar(FConteudo)
+    scrollbar = customtkinter.CTkScrollbar(master=FConteudo, )
     scrollbar.place(x=750, y=10)
 
     # Botão exportar
@@ -201,6 +202,22 @@ def criar_frame_principal():
     criar_frame_conteudo(git, comandoGit, descricaoGit)
     criar_frame_conteudo(sql, comandoSQL, descricaoSql)
     criar_frame_conteudo(python, comandoPython, descricaoPython)
+    criar_frame_conteudo(git, comandoGit, descricaoGit)
+    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
+    criar_frame_conteudo(python, comandoPython, descricaoPython)
+    criar_frame_conteudo(git, comandoGit, descricaoGit)
+    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
+    criar_frame_conteudo(python, comandoPython, descricaoPython)
+    criar_frame_conteudo(git, comandoGit, descricaoGit)
+    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
+    criar_frame_conteudo(python, comandoPython, descricaoPython)
+    criar_frame_conteudo(git, comandoGit, descricaoGit)
+    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
+    criar_frame_conteudo(python, comandoPython, descricaoPython)
+    criar_frame_conteudo(git, comandoGit, descricaoGit)
+    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
+    criar_frame_conteudo(python, comandoPython, descricaoPython)
+
 
     # Executa o Frame principal
     FPrincipal.mainloop()
@@ -208,4 +225,3 @@ def criar_frame_principal():
 
 if __name__ == "__main__":
     criar_frame_principal()
-
