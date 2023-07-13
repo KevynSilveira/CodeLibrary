@@ -97,7 +97,7 @@ def criar_frame_principal():
 
         y_pos = 10  # Posição vertical inicial
 
-        for _ in range(3):  # Número de frames a serem criados
+        for _ in range(1):
             # Cria o frame para o conteúdo
             FBlocoConteudo = customtkinter.CTkFrame(master=FConteudo, width=740, height=45)
             FBlocoConteudo.place(x=10, y=y_pos)
