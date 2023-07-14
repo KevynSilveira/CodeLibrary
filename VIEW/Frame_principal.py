@@ -1,6 +1,5 @@
 import customtkinter
 import textwrap
-from Funcoes_frame import tema
 
 def criar_frame_principal():
     # Cria a janela principal do código.
@@ -76,12 +75,10 @@ def criar_frame_principal():
     def criar_frame_conteudo(linguagem, comando, descricao):
         global y_pos  # Indica que estamos utilizando a variável global y_pos
 
-        # Definição das variáveis
         linguagem = linguagem
         comando = comando
         descricao = descricao
 
-        # Tamanho máximo de caracteres para a descrição
         max_caracteres = 30
 
         def mostrar_descricao(y):
@@ -91,40 +88,35 @@ def criar_frame_principal():
 
             MDescricao = customtkinter.CTkTextbox(master=FConteudo, width=740, height=100)
             MDescricao.insert(customtkinter.END, descricao)
-            MDescricao.bind("<Key>", lambda e: "break")  # Desativa a entrada do teclado
+            MDescricao.bind("<Key>", lambda e: "break")
             MDescricao.place(x=10, y=y)
 
             BVoltar = customtkinter.CTkButton(master=FConteudo, width=10, height=10, text="", corner_radius=2,
                                               command=voltar_descricao)
             BVoltar.place(x=740, y=y)
 
-        global y_pos  # Indica que estamos utilizando a variável global y_pos
+        global y_pos
 
         for _ in range(1):
-            # Cria o frame para o conteúdo
             FBlocoConteudo = customtkinter.CTkFrame(master=FConteudo, width=740, height=45)
             FBlocoConteudo.place(x=10, y=y_pos)
 
-            # Cria o frame para exibir a linguagem
             FLinguagem = customtkinter.CTkFrame(master=FBlocoConteudo, width=100, height=45)
             FLinguagem.place(x=0, y=0)
             Llinguagem = customtkinter.CTkLabel(master=FLinguagem, text=linguagem)
             Llinguagem.place(relx=0.5, rely=0.5, anchor="center")
 
-            # Cria o frame para exibir o comando
             FComando = customtkinter.CTkFrame(master=FBlocoConteudo, width=200, height=45)
             FComando.place(x=100, y=0)
             LComando = customtkinter.CTkLabel(master=FComando, text=comando)
             LComando.place(relx=0.5, rely=0.5, anchor="center")
 
-            # Cria o frame para exibir a descrição
             FDescricao = customtkinter.CTkFrame(master=FBlocoConteudo, width=440, height=45)
             FDescricao.place(x=300, y=0)
             BDescricao = customtkinter.CTkButton(master=FDescricao, width=10, height=10, text="", corner_radius=2,
                                                  command=lambda y_pos=y_pos: mostrar_descricao(y_pos))
             BDescricao.place(x=430, y=35)
 
-            # Verifica se o texto excede o limite e adiciona os três pontos se necessário
             if len(descricao) > max_caracteres:
                 texto_exibido = textwrap.shorten(descricao, width=max_caracteres - 3, placeholder="...")
             else:
@@ -132,7 +124,7 @@ def criar_frame_principal():
             LDescricao = customtkinter.CTkLabel(master=FDescricao, text=texto_exibido)
             LDescricao.place(relx=0.5, rely=0.5, anchor="center")
 
-            y_pos += 55  # Atualiza a posição vertical para o próximo frame
+            y_pos += 55
 
     # Frame principal
     FLinguagens = customtkinter.CTkFrame(master=FPrincipal, width=200, height=570, corner_radius=10)
@@ -168,7 +160,7 @@ def criar_frame_principal():
     CFiltro.place(x=740, y=10)
 
     # Botão para definir o tema
-    BTema = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="", command=tema)
+    BTema = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="Tema")
     BTema.place(x=950, y=11)
 
     # Frame conteúdo
@@ -176,7 +168,7 @@ def criar_frame_principal():
     FConteudo.place(x=220, y=100)
 
     # Scroll bar do frame conteúdo
-    scrollbar = customtkinter.CTkScrollbar(master=FConteudo, )
+    scrollbar = customtkinter.CTkScrollbar(master=FConteudo)
     scrollbar.place(x=750, y=10)
 
     # Botão exportar
@@ -199,25 +191,48 @@ def criar_frame_principal():
     descricaoSql = "Seleciona arquivos"
     descricaoPython = "Importa bibliotecas"
 
-    criar_frame_conteudo(git, comandoGit, descricaoGit)
-    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
-    criar_frame_conteudo(python, comandoPython, descricaoPython)
-    criar_frame_conteudo(git, comandoGit, descricaoGit)
-    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
-    criar_frame_conteudo(python, comandoPython, descricaoPython)
-    criar_frame_conteudo(git, comandoGit, descricaoGit)
-    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
-    criar_frame_conteudo(python, comandoPython, descricaoPython)
-    criar_frame_conteudo(git, comandoGit, descricaoGit)
-    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
-    criar_frame_conteudo(python, comandoPython, descricaoPython)
-    criar_frame_conteudo(git, comandoGit, descricaoGit)
-    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
-    criar_frame_conteudo(python, comandoPython, descricaoPython)
-    criar_frame_conteudo(git, comandoGit, descricaoGit)
-    criar_frame_conteudo(sql, comandoSQL, descricaoSql)
-    criar_frame_conteudo(python, comandoPython, descricaoPython)
+    conteudo_pages = [
+        [(sql, comandoSQL, descricaoSql), (python, comandoPython, descricaoPython), (git, comandoGit, descricaoGit)],
+        [(sql, comandoSQL, descricaoSql), (python, comandoPython, descricaoPython)],
+        [(git, comandoGit, descricaoGit), (sql, comandoSQL, descricaoSql), (python, comandoPython, descricaoPython)],
+    ]
 
+    total_pages = len(conteudo_pages)
+
+    # Variables for book-style functionality
+    current_page = 0
+
+    def next_page():
+        nonlocal current_page
+        if current_page < total_pages - 1:
+            current_page += 1
+            show_current_page()
+
+    def previous_page():
+        nonlocal current_page
+        if current_page > 0:
+            current_page -= 1
+            show_current_page()
+
+    def show_current_page():
+        global y_pos
+        y_pos = 10
+
+        for widget in FConteudo.winfo_children():
+            widget.destroy()
+
+        page_content = conteudo_pages[current_page]
+        for content in page_content:
+            criar_frame_conteudo(*content)
+
+    # Create next and previous buttons
+    BNext = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="Next", command=next_page)
+    BNext.place(x=150, y=540)
+
+    BPrevious = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="Previous", command=previous_page)
+    BPrevious.place(x=80, y=540)
+
+    show_current_page()
 
     # Executa o Frame principal
     FPrincipal.mainloop()
