@@ -5,6 +5,14 @@ usuario = "root"
 senha = "123qweasdzxc!@#"
 database = "codelibrary"
 
+linguagem = ''
+
+# Variáveis globais para armazenar o comando de seleção e o resultado da consulta
+comando_select_global = f"select * from commands where language like('%{linguagem}%');"
+resultado_global = []
+
+
+
 # Função para estabelecer conexão com o banco de dados
 def conectar_banco():
     try:
@@ -20,13 +28,11 @@ def conectar_banco():
         print(f"Erro ao conectar ao banco de dados: {erro}")
         return None
 
-# Variáveis globais para armazenar o comando de seleção e o resultado da consulta
-comando_select_global = "select * from commands where language like('%SQL%');"
-resultado_global = []
 
 # Função para consultar dados na tabela
-def consultar_dados():
-    global comando_select_global, resultado_global  # Declara as variáveis globais
+def consultar_dados(comando_select_global):
+    #global comando_select_global, resultado_global  # Declara as variáveis globais
+    global resultado_global
     conexao = conectar_banco()
     if conexao is not None:
         try:
@@ -69,4 +75,4 @@ def inserir_dados(language, command, description):
 #consultar_dados()  # Chama a função para consultar dados na tabela
 
 # Exemplo de uso para inserir dados
-inserir_dados("Python", "print('CONTEUDO A SER IMPRESSO')", "Imprimi a mensagem indicado.")
+#inserir_dados("Python", "print('CONTEUDO A SER IMPRESSO')", "Imprimi a mensagem indicado.")

@@ -1,6 +1,7 @@
 import customtkinter
 import textwrap
 from Funcoes_frame import tema
+from FUNCTIONS.Consulta_sql import consultar_dados
 
 def criar_frame_principal():
     # Cria a janela principal do aplicativo.
@@ -12,6 +13,32 @@ def criar_frame_principal():
     # Inicializa a posição vertical
     global y_pos  # Indica que estamos utilizando a variável global y_pos
     y_pos = 10
+
+
+    def atualiza_pesquisa(linguagem):
+        #Variáveis globais para armazenar o comando de seleção e o resultado da consulta
+        comando_select = f"select * from commands where language = '{linguagem}';"
+        return comando_select
+
+    def busca_sql():
+        global linguagem
+        linguagem = 'SQL'
+        consultar_dados(atualiza_pesquisa(linguagem))
+
+    def busca_python():
+        global linguagem
+        linguagem = 'python'
+        consultar_dados(atualiza_pesquisa(linguagem))
+
+    def busca_git():
+        global linguagem
+        linguagem = 'git'
+        consultar_dados(atualiza_pesquisa(linguagem))
+
+    def busca_java():
+        global linguagem
+        linguagem = 'java'
+        consultar_dados(atualiza_pesquisa(linguagem))
 
     def cadastrar_comando():
         # Função chamada ao clicar no botão "Cadastrar".
@@ -74,9 +101,7 @@ def criar_frame_principal():
 
     def criar_frame_conteudo(linguagem, comando, descricao):
         global y_pos  # Indica que estamos utilizando a variável global y_pos
-
         # Cria um frame de conteúdo com as informações fornecidas.
-
         # Função interna para exibir a descrição completa.
         def mostrar_descricao(y):
             def voltar_descricao():
@@ -127,19 +152,19 @@ def criar_frame_principal():
     frame_linguagens.place(x=10, y=10)
 
     # Botão para SQL
-    botao_sql = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="SQL")
+    botao_sql = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="SQL", command=busca_sql)
     botao_sql.place(x=10, y=10)
 
     # Botão para Python
-    botao_python = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Python")
+    botao_python = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Python", command=busca_python)
     botao_python.place(x=10, y=50)
 
     # Botão para Git
-    botao_git = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Git")
+    botao_git = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Git", command=busca_git)
     botao_git.place(x=10, y=90)
 
     # Botão para Java
-    botao_java = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Java")
+    botao_java = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Java", command=busca_java)
     botao_java.place(x=10, y=130)
 
     # Campo de pesquisa
