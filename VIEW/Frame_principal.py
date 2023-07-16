@@ -1,241 +1,239 @@
 import customtkinter
 import textwrap
+from Funcoes_frame import tema
 
 def criar_frame_principal():
-    # Cria a janela principal do código.
-    FPrincipal = customtkinter.CTk()
-    FPrincipal.geometry("1000x590")
-    FPrincipal.title("Biblioteca de comandos")
-    FPrincipal.resizable(False, False)
+    # Cria a janela principal do aplicativo.
+    janela_principal = customtkinter.CTk()
+    janela_principal.geometry("1000x590")
+    janela_principal.title("Biblioteca de comandos")
+    janela_principal.resizable(False, False)
 
     # Inicializa a posição vertical
     global y_pos  # Indica que estamos utilizando a variável global y_pos
     y_pos = 10
 
-    # Função para cadastrar um novo comando
-    def cadastro_comando():
-        def cancela_cadastro():
-            # Remove a tela de cadastro
-            FCadcomando.destroy()
+    def cadastrar_comando():
+        # Função chamada ao clicar no botão "Cadastrar".
+        def cancelar_cadastro():
+            # Remove a tela de cadastro.
+            tela_cadastro.destroy()
 
         def cadastrar():
-            linguagem = CFiltro.get()
-            comando = CComando.get()
-            descricao = CDescricao.get("1.0", "end-1c")
+            linguagem = combobox_linguagem.get()
+            comando = entry_comando.get()
+            descricao = text_descricao.get("1.0", "end-1c")
 
             if linguagem != "---Selecione uma linguagem---" and comando != "" and descricao != "":
-                FCadcomando.destroy()
+                tela_cadastro.destroy()
             else:
-                FCadcomando.destroy()
+                tela_cadastro.destroy()
 
         # Frame conteúdo, onde ficarão todas as opções de cadastrar um comando
-        FCadcomando = customtkinter.CTkFrame(master=FConteudo, width=480, height=330, corner_radius=10)
-        FCadcomando.place(x=145, y=45)
+        tela_cadastro = customtkinter.CTkFrame(master=frame_conteudo, width=480, height=330, corner_radius=10)
+        tela_cadastro.place(x=145, y=45)
 
         # Label de escolha de linguagem utilizando combobox
-        label_CLinguagem = customtkinter.CTkLabel(master=FCadcomando, text="Escolha a linguagem:")
-        label_CLinguagem.place(x=10, y=10)
+        label_linguagem = customtkinter.CTkLabel(master=tela_cadastro, text="Escolha a linguagem:")
+        label_linguagem.place(x=10, y=10)
 
         # Opções de linguagem para o combobox
-        opcoes_filtro = ["SQL", "Python", "GIT", "Java"]
+        opcoes_linguagem = ["SQL", "Python", "Git", "Java"]
 
-        # Campo combobox para selecionar a linguagem pegando como parâmetro as opções de filtro acima
-        CFiltro = customtkinter.CTkComboBox(master=FCadcomando, values=opcoes_filtro, width=460, height=30,
-                                            state="readonly")
-        CFiltro.set("---Selecione uma linguagem---")
-        CFiltro.place(x=10, y=40)
+        # Campo combobox para selecionar a linguagem pegando como parâmetro as opções de linguagem acima
+        combobox_linguagem = customtkinter.CTkComboBox(master=tela_cadastro, values=opcoes_linguagem, width=460, height=30,
+                                        state="readonly")
+        combobox_linguagem.set("---Selecione uma linguagem---")
+        combobox_linguagem.place(x=10, y=40)
 
         # Label indicativa para cadastrar um comando
-        label_CComando = customtkinter.CTkLabel(master=FCadcomando, text="Insira o comando:")
-        label_CComando.place(x=10, y=80)
+        label_comando = customtkinter.CTkLabel(master=tela_cadastro, text="Insira o comando:")
+        label_comando.place(x=10, y=80)
 
         # Campo de cadastro de comando
-        CComando = customtkinter.CTkEntry(master=FCadcomando, width=460, height=30, corner_radius=10)
-        CComando.place(x=10, y=110)
+        entry_comando = customtkinter.CTkEntry(master=tela_cadastro, width=460, height=30, corner_radius=10)
+        entry_comando.place(x=10, y=110)
 
         # Label indicativa para descrever o que o comando faz
-        label_CDescricao = customtkinter.CTkLabel(master=FCadcomando, text="Insira a descrição:")
-        label_CDescricao.place(x=10, y=140)
+        label_descricao = customtkinter.CTkLabel(master=tela_cadastro, text="Insira a descrição:")
+        label_descricao.place(x=10, y=140)
 
         # Campo de cadastro de descrição
-        CDescricao = customtkinter.CTkTextbox(master=FCadcomando, width=460, height=90, corner_radius=10)
-        CDescricao.place(x=10, y=170)
+        text_descricao = customtkinter.CTkTextbox(master=tela_cadastro, width=460, height=90, corner_radius=10)
+        text_descricao.place(x=10, y=170)
 
         # Botão de cancelar operação
-        BCancelar = customtkinter.CTkButton(master=FCadcomando, width=100, height=30, text="Cancelar",
-                                            command=cancela_cadastro)
-        BCancelar.place(x=130, y=290)
+        botao_cancelar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cancelar",
+                                        command=cancelar_cadastro)
+        botao_cancelar.place(x=130, y=290)
 
         # Botão de cadastrar comando
-        BCadcomando = customtkinter.CTkButton(master=FCadcomando, width=100, height=30, text="Cadastrar",
-                                              command=cadastrar)
-        BCadcomando.place(x=260, y=290)
+        botao_cadastrar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cadastrar",
+                                          command=cadastrar)
+        botao_cadastrar.place(x=260, y=290)
 
-    # Função para criar os frames de conteúdo
     def criar_frame_conteudo(linguagem, comando, descricao):
         global y_pos  # Indica que estamos utilizando a variável global y_pos
 
-        linguagem = linguagem
-        comando = comando
-        descricao = descricao
+        # Cria um frame de conteúdo com as informações fornecidas.
 
-        max_caracteres = 30
-
+        # Função interna para exibir a descrição completa.
         def mostrar_descricao(y):
             def voltar_descricao():
-                MDescricao.destroy()
-                BVoltar.destroy()
+                tela_descricao.destroy()
+                botao_voltar.destroy()
 
-            MDescricao = customtkinter.CTkTextbox(master=FConteudo, width=740, height=100)
-            MDescricao.insert(customtkinter.END, descricao)
-            MDescricao.bind("<Key>", lambda e: "break")
-            MDescricao.place(x=10, y=y)
+            tela_descricao = customtkinter.CTkTextbox(master=frame_conteudo, width=740, height=100)
+            tela_descricao.insert(customtkinter.END, descricao)
+            tela_descricao.bind("<Key>", lambda e: "break")
+            tela_descricao.place(x=10, y=y)
 
-            BVoltar = customtkinter.CTkButton(master=FConteudo, width=10, height=10, text="", corner_radius=2,
-                                              command=voltar_descricao)
-            BVoltar.place(x=740, y=y)
+            botao_voltar = customtkinter.CTkButton(master=frame_conteudo, width=10, height=10, text="", corner_radius=2,
+                                          command=voltar_descricao)
+            botao_voltar.place(x=740, y=y)
 
-        global y_pos
+        frame_bloco_conteudo = customtkinter.CTkFrame(master=frame_conteudo, width=740, height=45)
+        frame_bloco_conteudo.place(x=10, y=y_pos)
 
-        for _ in range(1):
-            FBlocoConteudo = customtkinter.CTkFrame(master=FConteudo, width=740, height=45)
-            FBlocoConteudo.place(x=10, y=y_pos)
+        frame_linguagem = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=100, height=45)
+        frame_linguagem.place(x=0, y=0)
+        label_linguagem = customtkinter.CTkLabel(master=frame_linguagem, text=linguagem)
+        label_linguagem.place(relx=0.5, rely=0.5, anchor="center")
 
-            FLinguagem = customtkinter.CTkFrame(master=FBlocoConteudo, width=100, height=45)
-            FLinguagem.place(x=0, y=0)
-            Llinguagem = customtkinter.CTkLabel(master=FLinguagem, text=linguagem)
-            Llinguagem.place(relx=0.5, rely=0.5, anchor="center")
+        frame_comando = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=200, height=45)
+        frame_comando.place(x=100, y=0)
+        label_comando = customtkinter.CTkLabel(master=frame_comando, text=comando)
+        label_comando.place(relx=0.5, rely=0.5, anchor="center")
 
-            FComando = customtkinter.CTkFrame(master=FBlocoConteudo, width=200, height=45)
-            FComando.place(x=100, y=0)
-            LComando = customtkinter.CTkLabel(master=FComando, text=comando)
-            LComando.place(relx=0.5, rely=0.5, anchor="center")
+        frame_descricao = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=440, height=45)
+        frame_descricao.place(x=300, y=0)
+        botao_descricao = customtkinter.CTkButton(master=frame_descricao, width=10, height=10, text="", corner_radius=2,
+                                         command=lambda y_pos=y_pos: mostrar_descricao(y_pos))
+        botao_descricao.place(x=430, y=35)
 
-            FDescricao = customtkinter.CTkFrame(master=FBlocoConteudo, width=440, height=45)
-            FDescricao.place(x=300, y=0)
-            BDescricao = customtkinter.CTkButton(master=FDescricao, width=10, height=10, text="", corner_radius=2,
-                                                 command=lambda y_pos=y_pos: mostrar_descricao(y_pos))
-            BDescricao.place(x=430, y=35)
+        max_caracteres = 30
+        if len(descricao) > max_caracteres:
+            texto_exibido = textwrap.shorten(descricao, width=max_caracteres - 3, placeholder="...")
+        else:
+            texto_exibido = descricao
 
-            if len(descricao) > max_caracteres:
-                texto_exibido = textwrap.shorten(descricao, width=max_caracteres - 3, placeholder="...")
-            else:
-                texto_exibido = descricao
-            LDescricao = customtkinter.CTkLabel(master=FDescricao, text=texto_exibido)
-            LDescricao.place(relx=0.5, rely=0.5, anchor="center")
+        label_descricao = customtkinter.CTkLabel(master=frame_descricao, text=texto_exibido)
+        label_descricao.place(relx=0.5, rely=0.5, anchor="center")
 
-            y_pos += 55
+        y_pos += 55
 
     # Frame principal
-    FLinguagens = customtkinter.CTkFrame(master=FPrincipal, width=200, height=570, corner_radius=10)
-    FLinguagens.place(x=10, y=10)
+    frame_linguagens = customtkinter.CTkFrame(master=janela_principal, width=200, height=570, corner_radius=10)
+    frame_linguagens.place(x=10, y=10)
 
-    # Button for SQL
-    BSQL = customtkinter.CTkButton(master=FLinguagens, width=180, height=30, text="SQL")
-    BSQL.place(x=10, y=10)
+    # Botão para SQL
+    botao_sql = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="SQL")
+    botao_sql.place(x=10, y=10)
 
-    # Button for Python
-    BPYTHON = customtkinter.CTkButton(master=FLinguagens, width=180, height=30, text="Python")
-    BPYTHON.place(x=10, y=50)
+    # Botão para Python
+    botao_python = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Python")
+    botao_python.place(x=10, y=50)
 
-    # Button for GIT
-    BGIT = customtkinter.CTkButton(master=FLinguagens, width=180, height=30, text="GIT")
-    BGIT.place(x=10, y=90)
+    # Botão para Git
+    botao_git = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Git")
+    botao_git.place(x=10, y=90)
 
-    # Button for Java
-    BJAVA = customtkinter.CTkButton(master=FLinguagens, width=180, height=30, text="Java")
-    BJAVA.place(x=10, y=130)
+    # Botão para Java
+    botao_java = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Java")
+    botao_java.place(x=10, y=130)
 
-    # Campo pesquisa
-    CPesquisa = customtkinter.CTkEntry(master=FPrincipal, width=510, height=30, corner_radius=10)
-    CPesquisa.place(x=220, y=10)
+    # Campo de pesquisa
+    campo_pesquisa = customtkinter.CTkEntry(master=janela_principal, width=510, height=30, corner_radius=10)
+    campo_pesquisa.place(x=220, y=10)
 
     # Opções da combobox
     opcoes_filtro = ["Linguagem", "Comando", "Descrição"]
 
     # Botão combobox filtro
-    CFiltro = customtkinter.CTkComboBox(master=FPrincipal, values=opcoes_filtro, width=200, height=30,
-                                        state="readonly")
-    CFiltro.set("---Filtro---")
-    CFiltro.place(x=740, y=10)
+    combobox_filtro = customtkinter.CTkComboBox(master=janela_principal, values=opcoes_filtro, width=200, height=30,
+                                    state="readonly")
+    combobox_filtro.set("---Filtro---")
+    combobox_filtro.place(x=740, y=10)
 
     # Botão para definir o tema
-    BTema = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="Tema")
-    BTema.place(x=950, y=11)
+    botao_tema = customtkinter.CTkButton(master=janela_principal, width=40, height=30, text="", command=tema)
+    botao_tema.place(x=950, y=11)
 
     # Frame conteúdo
-    FConteudo = customtkinter.CTkFrame(master=FPrincipal, width=770, height=420, corner_radius=10)
-    FConteudo.place(x=220, y=100)
+    frame_conteudo = customtkinter.CTkFrame(master=janela_principal, width=770, height=420, corner_radius=10)
+    frame_conteudo.place(x=220, y=100)
 
-    # Scroll bar do frame conteúdo
-    scrollbar = customtkinter.CTkScrollbar(master=FConteudo)
+    # Scrollbar do frame conteúdo
+    scrollbar = customtkinter.CTkScrollbar(master=frame_conteudo)
     scrollbar.place(x=750, y=10)
 
     # Botão exportar
-    BExportar = customtkinter.CTkButton(master=FPrincipal, text="Exportar")
-    BExportar.place(x=840, y=540)
+    botao_exportar = customtkinter.CTkButton(master=janela_principal, text="Exportar", width=100)
+    botao_exportar.place(x=880, y=540)
 
     # Botão Cadastrar comando
-    BCadastrar = customtkinter.CTkButton(master=FPrincipal, text="Cadastrar", command=cadastro_comando)
-    BCadastrar.place(x=670, y=540)
+    botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastrar_comando)
+    botao_cadastrar.place(x=30, y=530)
+
+    sql = "SQL"
+    comando_sql = "Select * From"
+    descricao_sql = "Seleciona arquivos"
+
+    python = "Python"
+    comando_python = "import"
+    descricao_python = "Importa bibliotecas"
 
     git = "Git"
-    sql = "SQL"
-    python = "Python"
-
-    comandoGit = "git add . "
-    comandoSQL = "Select * From"
-    comandoPython = "import"
-
-    descricaoGit = "Adiciona arquivos no stage"
-    descricaoSql = "Seleciona arquivos"
-    descricaoPython = "Importa bibliotecas"
+    comando_git = "git add . "
+    descricao_git = "Adiciona arquivos no stage"
 
     conteudo_pages = [
-        [(sql, comandoSQL, descricaoSql), (python, comandoPython, descricaoPython), (git, comandoGit, descricaoGit)],
-        [(sql, comandoSQL, descricaoSql), (python, comandoPython, descricaoPython)],
-        [(git, comandoGit, descricaoGit), (sql, comandoSQL, descricaoSql), (python, comandoPython, descricaoPython)],
+        [(sql, comando_sql, descricao_sql), (python, comando_python, descricao_python), (git, comando_git, descricao_git)],
+        [(sql, comando_sql, descricao_sql), (python, comando_python, descricao_python),
+         (git, comando_git, descricao_git)],
+        [(sql, comando_sql, descricao_sql), (python, comando_python, descricao_python),
+         (git, comando_git, descricao_git)]
     ]
 
     total_pages = len(conteudo_pages)
 
-    # Variables for book-style functionality
-    current_page = 0
+    # Variáveis para funcionalidade de navegação do livro
+    pagina_atual = 0
 
-    def next_page():
-        nonlocal current_page
-        if current_page < total_pages - 1:
-            current_page += 1
-            show_current_page()
+    def proxima_pagina():
+        nonlocal pagina_atual
+        if pagina_atual < total_pages - 1:
+            pagina_atual += 1
+            exibir_pagina_atual()
 
-    def previous_page():
-        nonlocal current_page
-        if current_page > 0:
-            current_page -= 1
-            show_current_page()
+    def pagina_anterior():
+        nonlocal pagina_atual
+        if pagina_atual > 0:
+            pagina_atual -= 1
+            exibir_pagina_atual()
 
-    def show_current_page():
+    def exibir_pagina_atual():
         global y_pos
         y_pos = 10
 
-        for widget in FConteudo.winfo_children():
+        for widget in frame_conteudo.winfo_children():
             widget.destroy()
 
-        page_content = conteudo_pages[current_page]
-        for content in page_content:
-            criar_frame_conteudo(*content)
+        conteudo_pagina = conteudo_pages[pagina_atual]
+        for conteudo in conteudo_pagina:
+            criar_frame_conteudo(*conteudo)
 
-    # Create next and previous buttons
-    BNext = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="Next", command=next_page)
-    BNext.place(x=150, y=540)
+    # Cria botões para avançar e voltar de página
+    botao_proxima = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Proxima", command=proxima_pagina)
+    botao_proxima.place(x=585, y=540)
 
-    BPrevious = customtkinter.CTkButton(master=FPrincipal, width=40, height=30, text="Previous", command=previous_page)
-    BPrevious.place(x=80, y=540)
+    botao_anterior = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Voltar", command=pagina_anterior)
+    botao_anterior.place(x=435, y=540)
 
-    show_current_page()
+    exibir_pagina_atual()
 
-    # Executa o Frame principal
-    FPrincipal.mainloop()
+    # Executa a janela principal
+    janela_principal.mainloop()
 
 
 if __name__ == "__main__":
