@@ -18,19 +18,19 @@ def criar_frame_principal():
 
     def atualiza_pesquisa(linguagem):
         #Variáveis globais para armazenar o comando de seleção e o resultado da consulta
-        comando_select = f"select * from commands where language = '{linguagem}';"
+        comando_select = f"select language, command, description from commands where language = '{linguagem}';"
         return comando_select
 
+    def atualizar_conteudo_pages(resultado):
+        global conteudo_pages
+        conteudo_pages = resultado
+        atualizar_total_pages(conteudo_pages)
+        exibir_pagina_atual(conteudo_pages)  # Passa a lista correta como parâmetro
     def busca_sql():
         global linguagem
         linguagem = 'SQL'
         resultado = consultar_dados(atualiza_pesquisa(linguagem))
-        global conteudo_pages
-        conteudo_pages = list(resultado)
-        exibir_pagina_atual()
-        print('teste', conteudo_pages)
-
-
+        atualizar_conteudo_pages(resultado)
 
     def busca_python():
         global linguagem
@@ -132,13 +132,13 @@ def criar_frame_principal():
         label_linguagem = customtkinter.CTkLabel(master=frame_linguagem, text=linguagem)
         label_linguagem.place(relx=0.5, rely=0.5, anchor="center")
 
-        frame_comando = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=200, height=45)
+        frame_comando = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=300, height=45)
         frame_comando.place(x=100, y=0)
         label_comando = customtkinter.CTkLabel(master=frame_comando, text=comando)
         label_comando.place(relx=0.5, rely=0.5, anchor="center")
 
-        frame_descricao = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=440, height=45)
-        frame_descricao.place(x=300, y=0)
+        frame_descricao = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=340, height=45)
+        frame_descricao.place(x=400, y=0)
         botao_descricao = customtkinter.CTkButton(master=frame_descricao, width=10, height=10, text="", corner_radius=2,
                                          command=lambda y_pos=y_pos: mostrar_descricao(y_pos))
         botao_descricao.place(x=430, y=35)
@@ -212,31 +212,34 @@ def criar_frame_principal():
     # Variáveis para funcionalidade de navegação do livro
     pagina_atual = 0
 
+    def atualizar_total_pages(lista):
+        global total_pages
+        total_pages = len(lista)
+
     def proxima_pagina():
-        nonlocal pagina_atual
+        global pagina_atual
         if pagina_atual < total_pages - 1:
             pagina_atual += 1
-            exibir_pagina_atual()
+            exibir_pagina_atual(conteudo_pages)  # Passa a lista correta como parâmetro
 
     def pagina_anterior():
-        nonlocal pagina_atual
+        global pagina_atual
         if pagina_atual > 0:
             pagina_atual -= 1
-            exibir_pagina_atual()
+            exibir_pagina_atual(conteudo_pages)  # Passa a lista correta como parâmetro
 
-    def exibir_pagina_atual():
+    def exibir_pagina_atual(lista):
         global y_pos
         y_pos = 10
 
-        print(conteudo_pages)
-
+        # Limpa o conteúdo atual antes de exibir a nova página
         for widget in frame_conteudo.winfo_children():
             widget.destroy()
 
-        if conteudo_pages:
-            conteudo_pagina = conteudo_pages[pagina_atual]
-            for conteudo in conteudo_pagina:
-                criar_frame_conteudo(*conteudo)
+        for tupla in lista:
+            for conteudo in tupla:
+                linguagem, comando, descricao = conteudo
+                criar_frame_conteudo(linguagem, comando, descricao)
 
     # Cria botões para avançar e voltar de página
     botao_proxima = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Proxima", command=proxima_pagina)
