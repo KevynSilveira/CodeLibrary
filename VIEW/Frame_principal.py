@@ -128,7 +128,7 @@ def criar_frame_principal():
             botao_voltar.place(x=740, y=y)
 
         frame_bloco_conteudo = customtkinter.CTkFrame(master=frame_conteudo, width=740, height=45)
-        frame_bloco_conteudo.place(x=10, y=y_pos)
+        frame_bloco_conteudo.place(x=15, y=y_pos)
 
         frame_linguagem = customtkinter.CTkFrame(master=frame_bloco_conteudo, width=100, height=45)
         frame_linguagem.place(x=0, y=0)
@@ -198,9 +198,6 @@ def criar_frame_principal():
     frame_conteudo = customtkinter.CTkFrame(master=janela_principal, width=770, height=420, corner_radius=10)
     frame_conteudo.place(x=220, y=100)
 
-    # Scrollbar do frame conteúdo
-    scrollbar = customtkinter.CTkScrollbar(master=frame_conteudo)
-    scrollbar.place(x=750, y=10)
 
     # Botão exportar
     botao_exportar = customtkinter.CTkButton(master=janela_principal, text="Exportar", width=100)
