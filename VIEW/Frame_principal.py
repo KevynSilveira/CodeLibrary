@@ -35,17 +35,20 @@ def criar_frame_principal():
     def busca_python():
         global linguagem
         linguagem = 'python'
-        consultar_dados(atualiza_pesquisa(linguagem))
+        resultado = consultar_dados(atualiza_pesquisa(linguagem))
+        atualizar_conteudo_pages(resultado)
 
     def busca_git():
         global linguagem
         linguagem = 'git'
-        consultar_dados(atualiza_pesquisa(linguagem))
+        resultado = consultar_dados(atualiza_pesquisa(linguagem))
+        atualizar_conteudo_pages(resultado)
 
     def busca_java():
         global linguagem
         linguagem = 'java'
-        consultar_dados(atualiza_pesquisa(linguagem))
+        resultado = consultar_dados(atualiza_pesquisa(linguagem))
+        atualizar_conteudo_pages(resultado)
 
     def cadastrar_comando():
         # Função chamada ao clicar no botão "Cadastrar".
