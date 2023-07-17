@@ -21,13 +21,14 @@ def criar_frame_principal():
         comando_select = f"select * from commands where language = '{linguagem}';"
         return comando_select
 
-
-
     def busca_sql():
         global linguagem
         linguagem = 'SQL'
         resultado = consultar_dados(atualiza_pesquisa(linguagem))
         global conteudo_pages
+        conteudo_pages = list(resultado)
+        exibir_pagina_atual()
+        print('teste', conteudo_pages)
 
 
 
@@ -227,6 +228,8 @@ def criar_frame_principal():
         global y_pos
         y_pos = 10
 
+        print(conteudo_pages)
+
         for widget in frame_conteudo.winfo_children():
             widget.destroy()
 
@@ -242,7 +245,7 @@ def criar_frame_principal():
     botao_anterior = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Voltar", command=pagina_anterior)
     botao_anterior.place(x=435, y=540)
 
-    exibir_pagina_atual()
+
 
     # Executa a janela principal
     janela_principal.mainloop()

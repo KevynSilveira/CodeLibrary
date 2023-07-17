@@ -12,7 +12,6 @@ comando_select_global = f"select * from commands where language like('%{linguage
 resultado_global = []
 
 
-
 # Função para estabelecer conexão com o banco de dados
 def conectar_banco():
     try:
@@ -50,8 +49,10 @@ def consultar_dados(comando_select):
             conexao.close()
             print("Conexão fechada.")
 
+    return resultado_global
 
- def organizar_resultados(resultado):
+
+def organizar_resultados(resultado):
     resultado_global = []
     sublist = []
     count = 0
@@ -66,11 +67,13 @@ def consultar_dados(comando_select):
         resultado_global.append(sublist)
     return resultado_global
 
+
 def imprimir_resultados(resultado_global):
     for sublist in resultado_global:
         for item in sublist:
             print(item)
         print()  # Adicione uma linha em branco entre as sublistas
+
 
 # Função para inserir conteúdo na tabela
 def inserir_dados(language, command, description):
