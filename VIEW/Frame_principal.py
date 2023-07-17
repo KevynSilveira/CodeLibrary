@@ -52,13 +52,15 @@ def criar_frame_principal():
         resultado = consultar_dados(atualiza_pesquisa(linguagem))
         atualizar_conteudo_pages(resultado)
 
-    def cadastrar_comando():
+    def cadastro_comando():
         # Função chamada ao clicar no botão "Cadastrar".
-        def cancelar_cadastro():
+
+        def cancela_cadastro():
             # Remove a tela de cadastro.
             tela_cadastro.destroy()
 
-        def cadastrar():
+        def valida_cadastro():
+            #Valida se todos os
             linguagem = combobox_linguagem.get()
             comando = entry_comando.get()
             descricao = text_descricao.get("1.0", "end-1c")
@@ -104,12 +106,12 @@ def criar_frame_principal():
 
         # Botão de cancelar operação
         botao_cancelar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cancelar",
-                                        command=cancelar_cadastro)
+                                        command=cancela_cadastro)
         botao_cancelar.place(x=130, y=290)
 
         # Botão de cadastrar comando
         botao_cadastrar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cadastrar",
-                                          command=cadastrar)
+                                          command=valida_cadastro)
         botao_cadastrar.place(x=260, y=290)
 
     def criar_frame_conteudo(linguagem, comando, descricao):
@@ -150,6 +152,7 @@ def criar_frame_principal():
         botao_descricao.place(x=430, y=35)
 
         max_caracteres = 30
+
         if len(descricao) > max_caracteres:
             texto_exibido = textwrap.shorten(descricao, width=max_caracteres - 3, placeholder="...")
         else:
@@ -207,7 +210,7 @@ def criar_frame_principal():
     botao_exportar.place(x=880, y=540)
 
     # Botão Cadastrar comando
-    botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastrar_comando)
+    botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastro_comando)
     botao_cadastrar.place(x=30, y=530)
 
     total_pages = len(conteudo_pages)
