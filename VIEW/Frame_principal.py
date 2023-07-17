@@ -2,6 +2,8 @@ import customtkinter
 import textwrap
 from Funcoes_frame import tema
 from FUNCTIONS.Consulta_sql import consultar_dados
+from FUNCTIONS.Consulta_sql import inserir_dados
+from tkinter import messagebox
 
 def criar_frame_principal():
     # Cria a janela principal do aplicativo.
@@ -62,9 +64,10 @@ def criar_frame_principal():
             descricao = text_descricao.get("1.0", "end-1c")
 
             if linguagem != "---Selecione uma linguagem---" and comando != "" and descricao != "":
-                tela_cadastro.destroy()
+                inserir_dados(linguagem, comando, descricao)
+                messagebox.showinfo('Cadastro comando', 'Comando cadastrado com sucesso!')
             else:
-                tela_cadastro.destroy()
+                messagebox.showerror('Cadastro comando', 'Preencha todos os campos')
 
         # Frame conteúdo, onde ficarão todas as opções de cadastrar um comando
         tela_cadastro = customtkinter.CTkFrame(master=frame_conteudo, width=480, height=330, corner_radius=10)
