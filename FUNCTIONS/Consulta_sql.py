@@ -30,19 +30,17 @@ def conectar_banco():
 
 
 # Função para consultar dados na tabela
-def consultar_dados(comando_select_global):
-    #global comando_select_global, resultado_global  # Declara as variáveis globais
-    global resultado_global
+def consultar_dados(comando_select):
     conexao = conectar_banco()
+    resultado_global = []
     if conexao is not None:
         try:
             cursor = conexao.cursor()
-            cursor.execute(comando_select_global)  # Utiliza a variável global com o comando de seleção
+            cursor.execute(comando_select)
             resultado = cursor.fetchall()
             if len(resultado) > 0:
-                resultado_global = resultado  # Armazena o resultado na variável global
-                for linha in resultado:
-                    print(linha)
+                resultado_global = organizar_resultados(resultado)
+                imprimir_resultados(resultado_global)
             else:
                 print("Nenhum resultado encontrado.")
             cursor.close()
@@ -51,6 +49,28 @@ def consultar_dados(comando_select_global):
         finally:
             conexao.close()
             print("Conexão fechada.")
+
+
+ def organizar_resultados(resultado):
+    resultado_global = []
+    sublist = []
+    count = 0
+    for linha in resultado:
+        sublist.append(linha)
+        count += 1
+        if count == 7:
+            resultado_global.append(sublist)
+            sublist = []
+            count = 0
+    if sublist:  # Se houver itens restantes na última sublista
+        resultado_global.append(sublist)
+    return resultado_global
+
+def imprimir_resultados(resultado_global):
+    for sublist in resultado_global:
+        for item in sublist:
+            print(item)
+        print()  # Adicione uma linha em branco entre as sublistas
 
 # Função para inserir conteúdo na tabela
 def inserir_dados(language, command, description):

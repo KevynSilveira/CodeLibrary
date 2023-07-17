@@ -14,16 +14,22 @@ def criar_frame_principal():
     global y_pos  # Indica que estamos utilizando a variável global y_pos
     y_pos = 10
 
+    conteudo_pages = []
 
     def atualiza_pesquisa(linguagem):
         #Variáveis globais para armazenar o comando de seleção e o resultado da consulta
         comando_select = f"select * from commands where language = '{linguagem}';"
         return comando_select
 
+
+
     def busca_sql():
         global linguagem
         linguagem = 'SQL'
-        consultar_dados(atualiza_pesquisa(linguagem))
+        resultado = consultar_dados(atualiza_pesquisa(linguagem))
+        global conteudo_pages
+
+
 
     def busca_python():
         global linguagem
@@ -200,26 +206,6 @@ def criar_frame_principal():
     botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastrar_comando)
     botao_cadastrar.place(x=30, y=530)
 
-    sql = "SQL"
-    comando_sql = "Select * From"
-    descricao_sql = "Seleciona arquivos"
-
-    python = "Python"
-    comando_python = "import"
-    descricao_python = "Importa bibliotecas"
-
-    git = "Git"
-    comando_git = "git add . "
-    descricao_git = "Adiciona arquivos no stage"
-
-    conteudo_pages = [
-        [(sql, comando_sql, descricao_sql), (python, comando_python, descricao_python), (git, comando_git, descricao_git)],
-        [(sql, comando_sql, descricao_sql), (python, comando_python, descricao_python),
-         (git, comando_git, descricao_git)],
-        [(sql, comando_sql, descricao_sql), (python, comando_python, descricao_python),
-         (git, comando_git, descricao_git)]
-    ]
-
     total_pages = len(conteudo_pages)
 
     # Variáveis para funcionalidade de navegação do livro
@@ -244,9 +230,10 @@ def criar_frame_principal():
         for widget in frame_conteudo.winfo_children():
             widget.destroy()
 
-        conteudo_pagina = conteudo_pages[pagina_atual]
-        for conteudo in conteudo_pagina:
-            criar_frame_conteudo(*conteudo)
+        if conteudo_pages:
+            conteudo_pagina = conteudo_pages[pagina_atual]
+            for conteudo in conteudo_pagina:
+                criar_frame_conteudo(*conteudo)
 
     # Cria botões para avançar e voltar de página
     botao_proxima = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Proxima", command=proxima_pagina)
