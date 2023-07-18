@@ -12,22 +12,24 @@ def criar_frame_principal():
     janela_principal.title("Biblioteca de comandos")
     janela_principal.resizable(False, False)
 
-    # Inicializa a posição vertical
-    global y_pos  # Indica que estamos utilizando a variável global y_pos
+    #Variavel usada na criacao de frames para exibicao de conteudo
+    global y_pos
     y_pos = 10
 
+    #Variavel armazena o conteudo das paginas
     conteudo_pages = []
 
     def atualiza_pesquisa(linguagem):
-        #Variáveis globais para armazenar o comando de seleção e o resultado da consulta
+        #Converte o comando par a linguagem passada a ele
         comando_select = f"select language, command, description from commands where language = '{linguagem}';"
         return comando_select
 
     def atualizar_conteudo_pages(resultado):
-        global conteudo_pages
+        #Atualiza o conteudo das paginas conforme o parametro recebido
+        nonlocal conteudo_pages
         conteudo_pages = resultado
         atualizar_total_pages(conteudo_pages)
-        exibir_pagina_atual(conteudo_pages)
+        exibir_pagina_atual()
     def busca_sql():
         global linguagem
         linguagem = 'sql'
@@ -241,6 +243,7 @@ def criar_frame_principal():
     botao_exportar = customtkinter.CTkButton(master=janela_principal, text="Exportar", width=100)
     botao_exportar.place(x=880, y=540)
 
+
     # Botão Cadastrar comando
     botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastro_comando)
     botao_cadastrar.place(x=30, y=530)
@@ -251,16 +254,16 @@ def criar_frame_principal():
     pagina_atual = 0
 
     def proxima_pagina():
-        global pagina_atual, conteudo_pages
+        nonlocal pagina_atual, conteudo_pages
         if conteudo_pages and pagina_atual < total_pages - 1:
             pagina_atual += 1
-            exibir_pagina_atual(conteudo_pages)
+            exibir_pagina_atual()
 
     def pagina_anterior():
-        global pagina_atual, conteudo_pages
+        nonlocal pagina_atual, conteudo_pages
         if conteudo_pages and pagina_atual > 0:
             pagina_atual -= 1
-            exibir_pagina_atual(conteudo_pages)
+            exibir_pagina_atual()
 
     def atualizar_total_pages(lista):
         global total_pages
@@ -269,9 +272,7 @@ def criar_frame_principal():
         else:
             total_pages = 0
 
-
-
-    def exibir_pagina_atual(lista):
+    def exibir_pagina_atual():
         global y_pos
         y_pos = 10
 
@@ -279,7 +280,7 @@ def criar_frame_principal():
         for widget in frame_conteudo.winfo_children():
             widget.destroy()
 
-        for tupla in lista:
+        for tupla in conteudo_pages:
             for conteudo in tupla:
                 linguagem, comando, descricao = conteudo
                 criar_frame_conteudo(linguagem, comando, descricao)
@@ -291,9 +292,9 @@ def criar_frame_principal():
     botao_anterior = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Voltar", command=pagina_anterior)
     botao_anterior.place(x=435, y=540)
 
+
     # Executa a janela principal
     janela_principal.mainloop()
-
 
 if __name__ == "__main__":
     criar_frame_principal()
