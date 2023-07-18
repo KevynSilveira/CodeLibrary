@@ -207,10 +207,10 @@ def criar_frame_principal():
         else:
             filtro = 'description'
 
-        comando = f'select * from commands where {filtro} like %{cpesquisa}%'
+        comando = f'select language, command, description from commands where {filtro} like "%{cpesquisa}%";'
 
         print(comando)
-        resultado = consultar_dados(atualiza_pesquisa(comando))
+        resultado = consultar_dados(comando)
         atualizar_conteudo_pages(resultado)
 
 
