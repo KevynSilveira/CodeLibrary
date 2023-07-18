@@ -190,7 +190,7 @@ def criar_frame_principal():
 
         # Verificar se os campos estão preenchidos
         if cpesquisa.strip() == "" or filtro == "---Filtro---":
-            print("Por favor, preencha todos os campos antes de realizar a pesquisa.")
+            messagebox.showwarning('Alerta', 'Por favor, preencha todos os campos antes de realizar a pesquisa.')
             return
 
         # Realizar a pesquisa
@@ -285,8 +285,6 @@ def criar_frame_principal():
 
     botao_anterior = customtkinter.CTkButton(master=janela_principal, width=140, height=30, text="Voltar", command=pagina_anterior)
     botao_anterior.place(x=435, y=540)
-
-
 
     # Executa a janela principal
     janela_principal.mainloop()
