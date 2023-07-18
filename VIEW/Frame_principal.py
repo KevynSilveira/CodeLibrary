@@ -27,10 +27,10 @@ def criar_frame_principal():
         global conteudo_pages
         conteudo_pages = resultado
         atualizar_total_pages(conteudo_pages)
-        exibir_pagina_atual(conteudo_pages)  # Passa a lista correta como parâmetro
+        exibir_pagina_atual(conteudo_pages)
     def busca_sql():
         global linguagem
-        linguagem = 'SQL'
+        linguagem = 'sql'
         resultado = consultar_dados(atualiza_pesquisa(linguagem))
         atualizar_conteudo_pages(resultado)
 
@@ -250,21 +250,26 @@ def criar_frame_principal():
     # Variáveis para funcionalidade de navegação do livro
     pagina_atual = 0
 
-    def atualizar_total_pages(lista):
-        global total_pages
-        total_pages = len(lista)
-
     def proxima_pagina():
-        global pagina_atual
-        if pagina_atual < total_pages - 1:
+        global pagina_atual, conteudo_pages
+        if conteudo_pages and pagina_atual < total_pages - 1:
             pagina_atual += 1
-            exibir_pagina_atual(conteudo_pages)  # Passa a lista correta como parâmetro
+            exibir_pagina_atual(conteudo_pages)
 
     def pagina_anterior():
-        global pagina_atual
-        if pagina_atual > 0:
+        global pagina_atual, conteudo_pages
+        if conteudo_pages and pagina_atual > 0:
             pagina_atual -= 1
-            exibir_pagina_atual(conteudo_pages)  # Passa a lista correta como parâmetro
+            exibir_pagina_atual(conteudo_pages)
+
+    def atualizar_total_pages(lista):
+        global total_pages
+        if lista:
+            total_pages = len(lista)
+        else:
+            total_pages = 0
+
+
 
     def exibir_pagina_atual(lista):
         global y_pos
