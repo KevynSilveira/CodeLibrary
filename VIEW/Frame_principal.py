@@ -183,18 +183,50 @@ def criar_frame_principal():
     botao_java = customtkinter.CTkButton(master=frame_linguagens, width=180, height=30, text="Java", command=busca_java)
     botao_java.place(x=10, y=130)
 
+    def pesquisa():
+        # Obter o conteúdo dos campos
+        cpesquisa = campo_pesquisa.get()
+        filtro = combobox_filtro.get()
+
+        # Verificar se os campos estão preenchidos
+        if cpesquisa.strip() == "" or filtro == "---Filtro---":
+            print("Por favor, preencha todos os campos antes de realizar a pesquisa.")
+            return
+
+        # Realizar a pesquisa
+        realizar_pesquisa(cpesquisa, filtro)
+
+    def realizar_pesquisa(cpesquisa, filtro):
+        #formata o conteudo passado para fazer a pesquisa no banco
+        if filtro == 'Linguagem':
+            filtro = 'language'
+
+        elif filtro == 'Comando':
+            filtro = 'command'
+
+        else:
+            filtro = 'description'
+
+        comando = f'select * from commands where {filtro} like %{cpesquisa}%'
+
+        print(comando)
+        resultado = consultar_dados(atualiza_pesquisa(comando))
+        atualizar_conteudo_pages(resultado)
+
+
     # Campo de pesquisa
     campo_pesquisa = customtkinter.CTkEntry(master=janela_principal, width=510, height=30, corner_radius=10)
     campo_pesquisa.place(x=220, y=10)
 
     # Opções da combobox
     opcoes_filtro = ["Linguagem", "Comando", "Descrição"]
-
-    # Botão combobox filtro
-    combobox_filtro = customtkinter.CTkComboBox(master=janela_principal, values=opcoes_filtro, width=200, height=30,
-                                    state="readonly")
+    combobox_filtro = customtkinter.CTkComboBox(master=janela_principal, values=opcoes_filtro, width=200, height=30, state="readonly")
     combobox_filtro.set("---Filtro---")
     combobox_filtro.place(x=740, y=10)
+
+    # Botão para pesquisar
+    botao_pesquisa = customtkinter.CTkButton(master=campo_pesquisa, width=70, height=20, text="Pesquisa", command=pesquisa)
+    botao_pesquisa.place(x=435, y=5)
 
     # Botão para definir o tema
     botao_tema = customtkinter.CTkButton(master=janela_principal, width=40, height=30, text="", command=tema)
