@@ -19,6 +19,12 @@ def criar_frame_principal():
     #Variavel armazena o conteudo das paginas
     conteudo_pages = []
 
+    #Armazena a quantidade de paginas dentro da variavel com base no conteudo_pages
+    total_pages = len(conteudo_pages)
+
+    # Variáveis para funcionalidade de navegação do livro
+    pagina_atual = 0
+
     def atualiza_pesquisa(linguagem):
         #Converte o comando par a linguagem passada a ele
         comando_select = f"select language, command, description from commands where language = '{linguagem}';"
@@ -28,7 +34,7 @@ def criar_frame_principal():
         #Atualiza o conteudo das paginas conforme o parametro recebido
         nonlocal conteudo_pages
         conteudo_pages = resultado
-        atualizar_total_pages(conteudo_pages)
+        atualizar_total_pages()
         exibir_pagina_atual()
     def busca_sql():
         global linguagem
@@ -56,13 +62,12 @@ def criar_frame_principal():
 
     def cadastro_comando():
         # Função chamada ao clicar no botão "Cadastrar".
-
         def cancela_cadastro():
             # Remove a tela de cadastro.
             tela_cadastro.destroy()
 
         def valida_cadastro():
-            #Valida se todos os
+            #Valida se todos os dados foram preenchidos
             linguagem = combobox_linguagem.get()
             comando = entry_comando.get()
             descricao = text_descricao.get("1.0", "end-1c")
@@ -85,8 +90,7 @@ def criar_frame_principal():
         opcoes_linguagem = ["SQL", "Python", "Git", "Java"]
 
         # Campo combobox para selecionar a linguagem pegando como parâmetro as opções de linguagem acima
-        combobox_linguagem = customtkinter.CTkComboBox(master=tela_cadastro, values=opcoes_linguagem, width=460, height=30,
-                                        state="readonly")
+        combobox_linguagem = customtkinter.CTkComboBox(master=tela_cadastro, values=opcoes_linguagem, width=460, height=30, state="readonly")
         combobox_linguagem.set("---Selecione uma linguagem---")
         combobox_linguagem.place(x=10, y=40)
 
@@ -107,20 +111,18 @@ def criar_frame_principal():
         text_descricao.place(x=10, y=170)
 
         # Botão de cancelar operação
-        botao_cancelar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cancelar",
-                                        command=cancela_cadastro)
+        botao_cancelar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cancelar", command=cancela_cadastro)
         botao_cancelar.place(x=130, y=290)
 
         # Botão de cadastrar comando
-        botao_cadastrar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cadastrar",
-                                          command=valida_cadastro)
+        botao_cadastrar = customtkinter.CTkButton(master=tela_cadastro, width=100, height=30, text="Cadastrar", command=valida_cadastro)
         botao_cadastrar.place(x=260, y=290)
 
     def criar_frame_conteudo(linguagem, comando, descricao):
         global y_pos  # Indica que estamos utilizando a variável global y_pos
         # Cria um frame de conteúdo com as informações fornecidas.
         # Função interna para exibir a descrição completa.
-        def mostrar_descricao(y):
+        def mostrar_descricao(y): #Mostra a descricao do comando
             def voltar_descricao():
                 tela_descricao.destroy()
                 botao_voltar.destroy()
@@ -130,10 +132,10 @@ def criar_frame_principal():
             tela_descricao.bind("<Key>", lambda e: "break")
             tela_descricao.place(x=10, y=y)
 
-            botao_voltar = customtkinter.CTkButton(master=frame_conteudo, width=10, height=10, text="", corner_radius=2,
-                                          command=voltar_descricao)
+            botao_voltar = customtkinter.CTkButton(master=frame_conteudo, width=10, height=10, text="", corner_radius=2, command=voltar_descricao)
             botao_voltar.place(x=740, y=y)
 
+        #Cria o frame bloco de conteudo
         frame_bloco_conteudo = customtkinter.CTkFrame(master=frame_conteudo, width=740, height=45)
         frame_bloco_conteudo.place(x=15, y=y_pos)
 
@@ -198,20 +200,19 @@ def criar_frame_principal():
         # Realizar a pesquisa
         realizar_pesquisa(cpesquisa, filtro)
 
-    def realizar_pesquisa(cpesquisa, filtro):
+    def realizar_pesquisa(cpesquisa, filtro): #Faz a pesquisa com base no texto de pesquisa e no filtro
         #formata o conteudo passado para fazer a pesquisa no banco
         if filtro == 'Linguagem':
             filtro = 'language'
-
         elif filtro == 'Comando':
             filtro = 'command'
-
         else:
             filtro = 'description'
 
+        #Formata o comando para mando pro banco
         comando = f'select language, command, description from commands where {filtro} like "%{cpesquisa}%";'
 
-        print(comando)
+        #Faz a consulta e atualiza as paginas
         resultado = consultar_dados(comando)
         atualizar_conteudo_pages(resultado)
 
@@ -238,20 +239,15 @@ def criar_frame_principal():
     frame_conteudo = customtkinter.CTkFrame(master=janela_principal, width=770, height=420, corner_radius=10)
     frame_conteudo.place(x=220, y=100)
 
+    # Botão Cadastrar comando
+    botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastro_comando)
+    botao_cadastrar.place(x=30, y=530)
 
     # Botão exportar
     botao_exportar = customtkinter.CTkButton(master=janela_principal, text="Exportar", width=100)
     botao_exportar.place(x=880, y=540)
 
 
-    # Botão Cadastrar comando
-    botao_cadastrar = customtkinter.CTkButton(master=frame_linguagens, text="Cadastrar", command=cadastro_comando)
-    botao_cadastrar.place(x=30, y=530)
-
-    total_pages = len(conteudo_pages)
-
-    # Variáveis para funcionalidade de navegação do livro
-    pagina_atual = 0
 
     def proxima_pagina():
         nonlocal pagina_atual, conteudo_pages
@@ -265,10 +261,11 @@ def criar_frame_principal():
             pagina_atual -= 1
             exibir_pagina_atual()
 
-    def atualizar_total_pages(lista):
-        global total_pages
-        if lista:
-            total_pages = len(lista)
+    def atualizar_total_pages():
+        nonlocal total_pages
+        nonlocal conteudo_pages
+        if conteudo_pages:
+            total_pages = len(conteudo_pages)
         else:
             total_pages = 0
 
