@@ -52,7 +52,7 @@ def consultar_dados(comando_select):
     return resultado_global
 
 
-def organizar_resultados(resultado):
+def organizar_resultados(resultado): # Organiza resultado do sql
     resultado_global = []
     sublist = []
     count = 0

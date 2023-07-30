@@ -5,6 +5,7 @@ from FUNCTIONS.Consulta_sql import consultar_dados
 from FUNCTIONS.Consulta_sql import inserir_dados
 from tkinter import messagebox
 
+
 def criar_frame_principal():
     janela_principal = customtkinter.CTk()
     janela_principal.geometry("1000x590")
