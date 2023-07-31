@@ -68,7 +68,7 @@ def organizar_resultados(resultado): # Organiza resultado do sql
     return resultado_global
 
 
-def imprimir_resultados(resultado_global):
+def imprimir_resultados(resultado_global): # Printa os resultados
     for sublist in resultado_global:
         for item in sublist:
             print(item)
