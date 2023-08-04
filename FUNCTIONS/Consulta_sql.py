@@ -94,8 +94,3 @@ def inserir_dados(language, command, description):
             conexao.close()
             print("Conexão fechada.")
 
-# Exemplo de uso
-#consultar_dados()  # Chama a função para consultar dados na tabela
-
-# Exemplo de uso para inserir dados
-#inserir_dados("Python", "print('CONTEUDO A SER IMPRESSO')", "Imprimi a mensagem indicado.")
