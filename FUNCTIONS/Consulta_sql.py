@@ -74,9 +74,7 @@ def imprimir_resultados(resultado_global): # Printa os resultados
             print(item)
         print()  # Adicione uma linha em branco entre as sublistas
 
-
-# Função para inserir conteúdo na tabela
-def inserir_dados(language, command, description):
+def inserir_dados(language, command, description):# Função para inserir conteúdo na tabela
     conexao = conectar_banco()
     if conexao is not None:
         try:
