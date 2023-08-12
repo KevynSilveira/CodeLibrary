@@ -87,7 +87,7 @@ def inserir_dados(language, command, description):# Função para inserir conte�
             print("Dados inseridos com sucesso!")
             cursor.close()
         except mysql.connector.Error as erro:
-            print(f"Erro ao inserir dados: {erro}")
+            print(f"Erro ao inserir dados: {erro}.")
         finally:
             conexao.close()
             print("Conexão fechada.")
